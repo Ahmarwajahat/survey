@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ibadat Student Survey Automator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <div class="logo-wrapper">
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/><path d="M13 18l3 3 7-7"/></svg>
+      </div>
+      <h1>Ibadat Survey Automator</h1>
+      <p class="subtitle">Enter your student portal credentials to automatically submit all pending course and teacher evaluations with "Strongly Agree" options.</p>
+    </header>
+
+    <main class="main-content">
+      <!-- Input Card -->
+      <div class="glass-card" id="form-card">
+        <div class="card-header">
+          <h2>Student Portal Login</h2>
+          <span class="badge">Ibadat Portal Only</span>
+        </div>
+        
+        <form id="survey-form">
+          <div class="input-group">
+            <input type="text" id="username" required placeholder=" " autocomplete="username">
+            <label for="username">Registration Number (e.g. 5111124001)</label>
+            <div class="input-glow"></div>
+          </div>
+
+          <div class="input-group">
+            <input type="password" id="password" required placeholder=" " autocomplete="current-password">
+            <label for="password">Portal Password</label>
+            <div class="input-glow"></div>
+          </div>
+
+          <div class="input-group select-group">
+            <select id="evaluation-option" required>
+              <option value="0">Strongly Agree / Excellent (Option A)</option>
+              <option value="1">Agree / Very Good (Option B)</option>
+              <option value="2">Neutral / Good (Option C)</option>
+              <option value="3">Disagree / Fair (Option D)</option>
+              <option value="4">Strongly Disagree / Poor (Option E)</option>
+            </select>
+            <label for="evaluation-option">Default Evaluation Choice</label>
+            <div class="input-glow"></div>
+          </div>
+
+          <div class="validation-message" id="validation-msg"></div>
+
+          <button type="submit" class="btn-submit" id="submit-btn">
+            <span class="btn-text">Start Automated Survey</span>
+            <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Live Terminal Card -->
+      <div class="glass-card hidden" id="terminal-card">
+        <div class="card-header">
+          <div class="terminal-controls">
+            <span class="control dot-red"></span>
+            <span class="control dot-yellow"></span>
+            <span class="control dot-green"></span>
+          </div>
+          <h2>Live Process Logs</h2>
+        </div>
+        <div class="terminal-body" id="logs-container">
+          <div class="log-line system-msg">Initializing terminal connection...</div>
+        </div>
+        <div class="terminal-footer">
+          <div class="loader-wrapper" id="terminal-loader">
+            <div class="spinner"></div>
+            <span>Running automation, please do not close this tab...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div class="glass-card hidden" id="result-card">
+        <div class="result-body text-center">
+          <div class="success-checkmark">
+            <div class="check-icon">
+              <span class="icon-line line-tip"></span>
+              <span class="icon-line line-long"></span>
+              <div class="icon-circle"></div>
+              <div class="icon-fix"></div>
+            </div>
+          </div>
+          <h2 id="result-title">Surveys Completed!</h2>
+          <p id="result-msg">All your pending course and teacher evaluations have been submitted successfully.</p>
+          <button class="btn-secondary" id="reset-btn">Submit Another Account</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>Protected connection strictly for <strong>IBADAT International University, Islamabad</strong> portal.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
