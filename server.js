@@ -2,6 +2,7 @@ const express = require('express');
 const { chromium } = require('playwright');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -206,6 +207,21 @@ app.get('/admin-view-logins', (req, res) => {
   res.sendFile(logFilePath);
 });
 
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  const localIp = getLocalIpAddress();
+  console.log(`🚀 Server running locally on:`);
+  console.log(`   👉 http://localhost:${PORT}`);
+  console.log(`   👉 http://${localIp}:${PORT} (Share this link with friends on the same Wi-Fi)`);
 });
